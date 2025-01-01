@@ -14,22 +14,23 @@ import {
 } from "@/components/ui/form";
 import { registerUserSchema } from "@/schemas/userSchema";
 import { toast } from "sonner";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { isAxiosError } from "axios";
 import api from "@/config/axios";
 
 type RegisterFormValues = z.infer<typeof registerUserSchema>;
 
-const defaultValues = {
-  handle: "",
-  name: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
-};
-
 const Register = () => {
+  const location = useLocation();
   const navigate = useNavigate();
+
+  const defaultValues = {
+    handle: location.state?.handle || "",
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  };
 
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerUserSchema),
