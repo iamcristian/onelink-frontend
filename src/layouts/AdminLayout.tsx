@@ -4,7 +4,7 @@ import AdminHeader from "@/components/header/AdminHeader";
 
 const AdminLayout = () => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen px-4 md:px-12 lg:px-32">
       <AdminHeader />
       <div className="container mx-auto px-4 py-8">
         <Tabs defaultValue="links" className="mb-6">

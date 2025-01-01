@@ -4,8 +4,8 @@ import { Button } from "../ui/button";
 
 const AdminHeader = () => {
   return (
-    <header className="w-full bg-background/95 border-b mb-6">
-      <div className="flex items-center justify-between h-14 px-4 md:px-12 lg:px-32">
+    <header className="z-50 w-full bg-background/95 border-b">
+      <div className="flex items-center justify-between h-14">
         <div className="flex items-center space-x-4">
           <Link to="/admin" className="text-lg font-bold">
             AdminPanel
