@@ -3,11 +3,11 @@ import z from "zod";
 export const userSchema = z.object({
   handle: z
     .string()
-    .min(3, { message: "Handle must be at least 3 characters long" })
-    .max(30, { message: "Handle must be at most 30 characters long" })
+    .min(3, { message: "Username must be at least 3 characters long" })
+    .max(30, { message: "Username must be at most 30 characters long" })
     .regex(/^[a-zA-Z0-9._-]+$/, {
       message:
-        "Handle must be alphanumeric and just can include '.', '_', and '-'",
+        "Username must be alphanumeric and just can include '.', '_', and '-'",
     }),
   name: z.string().min(3).max(255),
   email: z.string().email(),
