@@ -1,5 +1,6 @@
 import Footer from "@/components/Footer";
-import { Header } from "@/stories/Header";
+import { Header } from "@/components/Header";
+import { Toaster } from "@/components/ui/sonner";
 import { Outlet } from "react-router";
 
 const MainLayout = () => {
@@ -9,6 +10,7 @@ const MainLayout = () => {
       <main className="flex-grow container mx-auto px-4 py-8">
         <Outlet />
       </main>
+      <Toaster position="top-right" richColors />
       <Footer />
     </div>
   );
