@@ -38,11 +38,13 @@ const Login = () => {
     } catch (error) {
       if (isAxiosError(error) && error.response)
         toast.error(error.response.data.message);
+      else 
+        toast.error("An error occurred. Please try again later.");
     }
   };
 
   return (
-    <div className="max-w-md mx-auto">
+    <div className="max-w-md mx-auto min-h-screen">
       <h1 className="text-3xl font-bold mb-6">Login</h1>
 
       <Form {...form}>
@@ -54,7 +56,11 @@ const Login = () => {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input type="email" {...field} />
+                  <Input
+                    type="email"
+                    {...field}
+                    placeholder="Enter your email"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -68,7 +74,11 @@ const Login = () => {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input type="password" {...field} />
+                  <Input
+                    type="password"
+                    {...field}
+                    placeholder="Enter your password"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

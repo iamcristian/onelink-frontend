@@ -50,7 +50,7 @@ const Register = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto">
+    <div className="max-w-md mx-auto min-h-screen">
       <h1 className="text-3xl font-bold mb-6">Register</h1>
 
       <Form {...form}>
@@ -65,9 +65,9 @@ const Register = () => {
               <FormItem>
                 <FormLabel>Username</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...field} placeholder="Enter your username" />
                 </FormControl>
-                <FormDescription>Your username is unique</FormDescription>
+                <FormDescription>Choose a unique username</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -80,7 +80,7 @@ const Register = () => {
               <FormItem>
                 <FormLabel>Full Name</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...field} placeholder="Enter your full name" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -94,7 +94,11 @@ const Register = () => {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input type="email" {...field} />
+                  <Input
+                    type="email"
+                    {...field}
+                    placeholder="Enter your email"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -108,7 +112,11 @@ const Register = () => {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input type="password" {...field} />
+                  <Input
+                    type="password"
+                    {...field}
+                    placeholder="Enter your password"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -122,7 +130,11 @@ const Register = () => {
               <FormItem>
                 <FormLabel>Confirm Password</FormLabel>
                 <FormControl>
-                  <Input type="password" {...field} />
+                  <Input
+                    type="password"
+                    {...field}
+                    placeholder="Confirm your password"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

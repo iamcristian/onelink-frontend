@@ -1,4 +1,4 @@
-import SearchForm from "@/components/Home/SearchForm";
+import SearchForm from "@/components/home/SearchForm";
 
 const Home = () => {
   return (

@@ -45,10 +45,10 @@ export const Header = () => {
           </button>
 
           {/* Login and Register buttons */}
-          <Button variant="default">
+          <Button variant="default" asChild>
             <Link to="/auth/login">Login</Link>
           </Button>
-          <Button variant="ghost" className="hidden sm:inline">
+          <Button variant="ghost" className="hidden sm:inline" asChild>
             <Link to="/auth/register">Register</Link>
           </Button>
         </div>
