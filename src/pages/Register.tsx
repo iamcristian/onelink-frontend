@@ -11,45 +11,37 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { registerUserSchema } from "@/schemas/userSchema";
 
-const registerSchema = z
-  .object({
-    username: z.string().min(3),
-    email: z.string().email(),
-    password: z.string().min(6),
-    confirmPassword: z.string().min(6),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ["confirmPassword"],
-  });
+type RegisterFormValues = z.infer<typeof registerUserSchema>;
 
-type RegisterFormValues = z.infer<typeof registerSchema>;
+const defaultValues = {
+  handle: "",
+  name: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
 
 const Register = () => {
   const form = useForm<RegisterFormValues>({
-    resolver: zodResolver(registerSchema),
-    defaultValues: {
-      username: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    },
+    resolver: zodResolver(registerUserSchema),
+    defaultValues,
   });
 
   const onSubmit = (data: RegisterFormValues) => {
     console.log(data);
-    // Aquí iría la lógica de registro
   };
 
   return (
     <div className="max-w-md mx-auto">
       <h1 className="text-3xl font-bold mb-6">Register</h1>
+
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
             control={form.control}
-            name="username"
+            name="handle"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Username</FormLabel>
@@ -60,6 +52,21 @@ const Register = () => {
               </FormItem>
             )}
           />
+
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <FormField
             control={form.control}
             name="email"
@@ -73,6 +80,7 @@ const Register = () => {
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name="password"
@@ -86,6 +94,7 @@ const Register = () => {
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name="confirmPassword"
@@ -99,6 +108,7 @@ const Register = () => {
               </FormItem>
             )}
           />
+
           <Button type="submit" className="w-full">
             Register
           </Button>
