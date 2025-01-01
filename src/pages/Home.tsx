@@ -17,7 +17,6 @@ const Home = () => {
         </p>
       </div>
 
-      {/* Search Form */}
       <SearchForm />
     </div>
   );
