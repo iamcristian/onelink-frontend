@@ -9,7 +9,7 @@ export const Header = () => {
 
   return (
     <header className="z-50 w-full bg-background/95 border-b">
-      <div className="flex items-center justify-between h-14 p-4">
+      <div className="flex items-center justify-between h-14">
         <div className="flex items-center space-x-4">
           <Link to="/" className="text-lg font-bold flex items-center gap-2">
             <LinkIcon className="h-5 w-5" />

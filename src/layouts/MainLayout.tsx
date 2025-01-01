@@ -5,9 +5,9 @@ import { Outlet } from "react-router";
 
 const MainLayout = () => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen px-4 md:px-12 lg:px-32">
       <Header />
-      <main className="flex-grow container mx-auto px-4 py-8">
+      <main className="flex-grow container mx-auto py-8">
         <Outlet />
       </main>
       <Toaster position="top-right" richColors />
