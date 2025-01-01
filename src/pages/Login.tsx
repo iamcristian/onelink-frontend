@@ -39,7 +39,10 @@ const Login = () => {
     } catch (error) {
       if (isAxiosError(error) && error.response)
         toast.error(error.response.data.message);
-      else toast.error("An error occurred. Please try again later.");
+      else {
+        // toast.error("An error occurred. Please try again later.");
+        toast.error(JSON.stringify(error));
+      }
     }
   };
 

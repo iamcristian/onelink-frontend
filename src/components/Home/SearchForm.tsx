@@ -39,8 +39,8 @@ function SearchForm() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSearch)} className="space-y-8">
         <div className="w-full max-w-md mx-auto">
-          <div className="flex items-center space-x-2 mb-2">
-            <div className="flex items-center w-full border rounded-lg">
+          <div className="flex flex-col sm:flex-row items-center space-x-2 mb-2">
+            <div className="flex flex-col sm:flex-row items-center w-full border rounded-lg">
               <span className="p-2">onelink.app/</span>
               <FormField
                 control={form.control}
@@ -51,7 +51,7 @@ function SearchForm() {
                       <Input
                         type="text"
                         placeholder="username"
-                        className="w-full border-none focus:!ring-transparent focus:!border-none"
+                        className="w-full border-none focus:!ring-transparent focus:!border-none text-center sm:text-left"
                         {...field}
                       />
                     </FormControl>
@@ -59,7 +59,7 @@ function SearchForm() {
                 )}
               />
             </div>
-            <Button type="submit" size="lg">
+            <Button type="submit" size="lg" className="m-2 sm:m-0">
               Claim your Onelink
             </Button>
           </div>
@@ -77,13 +77,13 @@ function SearchForm() {
           {mutation.data && (
             <p className="text-sm py-2">
               Username is available. Go to{" "}
-                <Link
+              <Link
                 to="/auth/register"
                 state={{ handle }}
                 className="text-blue-500 underline hover:text-blue-700"
-                >
+              >
                 Register
-                </Link>
+              </Link>
             </p>
           )}
           <p className="text-sm text-secondary py-2">

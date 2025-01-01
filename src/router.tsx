@@ -4,6 +4,7 @@ import MainLayout from "./layouts/MainLayout";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import AdminLayout from "./layouts/AdminLayout";
 
 export default function Router() {
   return (
@@ -16,6 +17,10 @@ export default function Router() {
         <Route path="/auth" element={<MainLayout />}>
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
+        </Route>
+
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index />
         </Route>
 
         <Route path="/404" element={<NotFound />} />
