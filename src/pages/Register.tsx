@@ -6,12 +6,17 @@ import { Input } from "@/components/ui/input";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { registerUserSchema } from "@/schemas/userSchema";
+import { toast } from "sonner";
+import { useNavigate } from "react-router";
+import { isAxiosError } from "axios";
+import api from "@/config/axios";
 
 type RegisterFormValues = z.infer<typeof registerUserSchema>;
 
@@ -24,13 +29,23 @@ const defaultValues = {
 };
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerUserSchema),
     defaultValues,
   });
 
-  const onSubmit = (data: RegisterFormValues) => {
-    console.log(data);
+  const handleRegister = async (formData: RegisterFormValues) => {
+    try {
+      const { data } = await api.post("/auth/register", formData);
+      toast.success(data.message);
+      form.reset();
+      navigate("/auth/login");
+    } catch (error) {
+      if (isAxiosError(error) && error.response)
+        toast.error(error.response.data.message);
+    }
   };
 
   return (
@@ -38,7 +53,10 @@ const Register = () => {
       <h1 className="text-3xl font-bold mb-6">Register</h1>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form
+          onSubmit={form.handleSubmit(handleRegister)}
+          className="space-y-4"
+        >
           <FormField
             control={form.control}
             name="handle"
@@ -48,6 +66,7 @@ const Register = () => {
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
+                <FormDescription>Your username is unique</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -58,7 +77,7 @@ const Register = () => {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Name</FormLabel>
+                <FormLabel>Full Name</FormLabel>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>

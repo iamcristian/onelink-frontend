@@ -1,20 +1,14 @@
-export interface User {
-  id: string;
-  username: string;
-  email: string;
+export type User = {
+  handle: string;
   name: string;
-  bio?: string;
-  avatar?: string;
-}
+  email: string;
+  _id: string;
+  description: string;
+  image: string;
+  links: string;
+};
 
-export interface Link {
-  id: string;
-  title: string;
-  url: string;
-  icon?: string;
-}
+export type RegisterForm = Pick<User, "handle" | "name" | "email"> & {
+  password: string;
+};
 
-export interface Profile {
-  user: User;
-  links: Link[];
-}
