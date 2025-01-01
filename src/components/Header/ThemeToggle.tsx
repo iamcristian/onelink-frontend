@@ -1,12 +1,12 @@
 import { useTheme } from "@/hooks/use-theme";
+import { Check, Palette, Moon, Sun } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-import { Button } from "./ui/button";
-import { Check, Palette, Moon, Sun } from "lucide-react";
+} from "../ui/dropdown-menu";
+import { Button } from "../ui/button";
 
 export const ThemeToggle = () => {
   const { theme, setTheme } = useTheme();

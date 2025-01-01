@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { LinkIcon, Menu, X } from "lucide-react";
 import { Link } from "react-router";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -11,7 +11,8 @@ export const Header = () => {
     <header className="z-50 w-full bg-background/95 border-b">
       <div className="flex items-center justify-between h-14 p-4">
         <div className="flex items-center space-x-4">
-          <Link to="/" className="text-lg font-bold">
+          <Link to="/" className="text-lg font-bold flex items-center gap-2">
+            <LinkIcon className="h-5 w-5" />
             OneLink
           </Link>
           <nav className="hidden md:flex space-x-4">
