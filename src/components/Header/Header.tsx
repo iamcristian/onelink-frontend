@@ -70,10 +70,10 @@ export const Header = () => {
             <a href="/themes" className="block">
               Themes
             </a>
-            <a href="/login" className="block">
+            <a href="/auth/login" className="block">
               Login
             </a>
-            <a href="/register" className="block">
+            <a href="/auth/register" className="block">
               Register
             </a>
           </nav>
