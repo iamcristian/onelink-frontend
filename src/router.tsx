@@ -5,6 +5,8 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import AdminLayout from "./layouts/AdminLayout";
+import Profile from "./pages/Profile";
+import Links from "./pages/Links";
 
 export default function Router() {
   return (
@@ -20,7 +22,8 @@ export default function Router() {
         </Route>
 
         <Route path="/admin" element={<AdminLayout />}>
-          <Route index />
+          <Route index element={<Profile />} />
+          <Route path="links" element={<Links />} />
         </Route>
 
         <Route path="/404" element={<NotFound />} />

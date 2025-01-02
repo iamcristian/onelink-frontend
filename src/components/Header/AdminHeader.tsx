@@ -33,7 +33,7 @@ const AdminHeader = () => {
             <Link to="/admin/links" className="text-sm hover:underline">
               Links
             </Link>
-            <Link to="/admin/profile" className="text-sm hover:underline">
+            <Link to="/admin" className="text-sm hover:underline">
               Profile
             </Link>
           </nav>
