@@ -7,3 +7,4 @@ export type User = {
   image: string;
   links: string;
 };
+

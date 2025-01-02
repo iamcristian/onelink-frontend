@@ -1,9 +1,6 @@
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { useNavigate } from "react-router";
+import { login } from "@/api/auth";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -12,11 +9,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { toast } from "sonner";
+import { Input } from "@/components/ui/input";
 import { loginUserSchema } from "@/schemas/userSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
-import api from "@/config/axios";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
+import { toast } from "sonner";
+import { z } from "zod";
 
 type LoginFormData = z.infer<typeof loginUserSchema>;
 
@@ -31,19 +32,24 @@ const Login = () => {
     },
   });
 
-  const handleLogin = async (formdata: LoginFormData) => {
-    try {
-      const { data } = await api.post("/auth/login", formdata);
+  const mutation = useMutation({
+    mutationFn: login,
+    retry: 1,
+    onSuccess: (data) => {
       localStorage.setItem("token", data.token);
       navigate("/admin");
-    } catch (error) {
+    },
+    onError: (error) => {
       if (isAxiosError(error) && error.response)
         toast.error(error.response.data.message);
       else {
-        // toast.error("An error occurred. Please try again later.");
-        toast.error(JSON.stringify(error));
+        toast.error("An error occurred in Login. Please try again later.");
       }
-    }
+    },
+  });
+
+  const handleLogin = (formData: LoginFormData) => {
+    mutation.mutate(formData);
   };
 
   return (
@@ -94,8 +100,12 @@ const Login = () => {
                 )}
               />
 
-              <Button type="submit" className="w-full">
-                Login
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={mutation.isPending}
+              >
+                {mutation.isPending ? "Logging in..." : "Login"}
               </Button>
             </form>
           </Form>
