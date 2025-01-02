@@ -20,7 +20,6 @@ const EditProfile = () => {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
   } = useForm<EditProfileFormData>({
     resolver: zodResolver(editProfileSchema),
     defaultValues: {
@@ -34,9 +33,9 @@ const EditProfile = () => {
     onError: (error) => {
       toast.error(error.message);
     },
-    onSuccess: (data) => {
-      toast.success(data);
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["user"] });
+      window.location.reload(); // Force page reload
     },
   });
 
@@ -50,9 +49,6 @@ const EditProfile = () => {
     },
   });
 
-  const username = watch("handle");
-  const description = watch("description");
-
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) uploadImageMutation.mutate(e.target.files[0]);
   };
@@ -65,79 +61,61 @@ const EditProfile = () => {
   };
 
   return (
-    <div className="min-w-full mx-auto mt-8 md:mt-0 flex flex-col-reverse md:flex-row gap-8 md:gap-0 md:space-x-8 lg:space-x-24 justify-center">
-      <div className="w-full md:w-1/2 lg:w-1/3 flex flex-col justify-center">
-        <h2 className="text-2xl font-bold mb-4">Edit Profile</h2>
+    <div className="w-full md:w-1/2 lg:w-1/3 flex flex-col justify-center">
+      <h2 className="text-2xl font-bold mb-4">Edit Profile</h2>
 
-        <form onSubmit={handleSubmit(handleUserProfileForm)} className="space-y-6">
-          {/* Username */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Username
-            </label>
-            <Input
-              {...register("handle")}
-              placeholder="Enter your username"
-              className="mt-1"
-            />
-            {errors.handle && (
-              <p className="text-red-500 text-sm">{errors.handle.message}</p>
-            )}
-          </div>
-
-          {/* Description */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Description
-            </label>
-            <Textarea
-              {...register("description")}
-              placeholder="Tell us something about you"
-              className="mt-1"
-              rows={4}
-            />
-            {errors.description && (
-              <p className="text-red-500 text-sm">
-                {errors.description.message}
-              </p>
-            )}
-          </div>
-
-          {/* Image */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Profile Image
-            </label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              className="mt-1"
-            />
-          </div>
-
-          <Button type="submit" className="w-full mt-4">
-            Save Changes
-          </Button>
-        </form>
-      </div>
-
-      <div className="w-full md:w-1/2 flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-800 p-4 rounded-lg">
-        <h3 className="text-xl font-semibold mb-4">Profile Preview</h3>
-        <div className="flex flex-col items-center">
-          <img
-            src={user.image}
-            alt="Profile preview"
-            className="w-24 h-24 rounded-full object-cover mb-4"
+      <form
+        onSubmit={handleSubmit(handleUserProfileForm)}
+        className="space-y-6"
+      >
+        {/* Username */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            Username
+          </label>
+          <Input
+            {...register("handle")}
+            placeholder="Enter your username"
+            className="mt-1"
           />
-          <p className="text-lg font-medium text-gray-900 dark:text-gray-100">
-            {username}
-          </p>
-          <p className="text-sm text-gray-700 dark:text-gray-300 text-center mt-2">
-            {description}
-          </p>
+          {errors.handle && (
+            <p className="text-red-500 text-sm">{errors.handle.message}</p>
+          )}
         </div>
-      </div>
+
+        {/* Description */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            Description
+          </label>
+          <Textarea
+            {...register("description")}
+            placeholder="Tell us something about you"
+            className="mt-1"
+            rows={4}
+          />
+          {errors.description && (
+            <p className="text-red-500 text-sm">{errors.description.message}</p>
+          )}
+        </div>
+
+        {/* Image */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            Profile Image
+          </label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="mt-1"
+          />
+        </div>
+
+        <Button type="submit" className="w-full mt-4">
+          Save Changes
+        </Button>
+      </form>
     </div>
   );
 };
