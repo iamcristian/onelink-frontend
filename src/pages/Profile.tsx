@@ -4,9 +4,11 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { User } from "@/types/user";
 import { editProfileSchema } from "@/schemas/editUserSchema";
+import { updateProfile, uploadImage } from "@/api/user";
+import { toast } from "sonner";
 
 type EditProfileFormData = z.infer<typeof editProfileSchema>;
 
@@ -24,23 +26,50 @@ const EditProfile = () => {
     defaultValues: {
       handle: user.handle,
       description: user.description,
-      image: user.image,
+    },
+  });
+
+  const updateProfileMutation = useMutation({
+    mutationFn: updateProfile,
+    onError: (error) => {
+      toast.error(error.message);
+    },
+    onSuccess: (data) => {
+      toast.success(data);
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+    },
+  });
+
+  const uploadImageMutation = useMutation({
+    mutationFn: uploadImage,
+    onError: (error) => {
+      toast.error(error.message);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["user"] });
     },
   });
 
   const username = watch("handle");
   const description = watch("description");
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {};
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) uploadImageMutation.mutate(e.target.files[0]);
+  };
 
-  const onSubmit = (formData: EditProfileFormData) => {};
+  const handleUserProfileForm = (formData: EditProfileFormData) => {
+    const data: User = queryClient.getQueryData<User>(["user"])!;
+    data.description = formData.description;
+    data.handle = formData.handle;
+    updateProfileMutation.mutate(data);
+  };
 
   return (
     <div className="min-w-full mx-auto mt-8 md:mt-0 flex flex-col-reverse md:flex-row gap-8 md:gap-0 md:space-x-8 lg:space-x-24 justify-center">
       <div className="w-full md:w-1/2 lg:w-1/3 flex flex-col justify-center">
         <h2 className="text-2xl font-bold mb-4">Edit Profile</h2>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={handleSubmit(handleUserProfileForm)} className="space-y-6">
           {/* Username */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -107,7 +136,6 @@ const EditProfile = () => {
           <p className="text-sm text-gray-700 dark:text-gray-300 text-center mt-2">
             {description}
           </p>
-          
         </div>
       </div>
     </div>

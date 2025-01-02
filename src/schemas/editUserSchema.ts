@@ -5,5 +5,5 @@ export const editProfileSchema = z.object({
   description: z
     .string()
     .max(200, "Description cannot be longer than 200 characters"),
-  image: z.string().optional(),
+  // image: z.string().optional(),
 });

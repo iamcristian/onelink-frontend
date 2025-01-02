@@ -22,3 +22,30 @@ export async function getUser() {
       throw new Error(error.response.data.message);
   }
 }
+
+export async function updateProfile(formData: User) {
+  try {
+    const { data } = await api.patch<string>("/api/user", formData);
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message);
+    }
+  }
+}
+
+export async function uploadImage(file: File) {
+  const formData = new FormData();
+  formData.append("file", file);
+  try {
+    const data: { data: { image: string } } = await api.post(
+      "/api/user/image",
+      formData
+    );
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message);
+    }
+  }
+}
