@@ -65,7 +65,7 @@ const AdminHeader = () => {
               <div className="absolute right-0 mt-2 w-40 border rounded-md shadow-lg">
                 <div className="py-2 px-4 text-sm">
                   <div className="font-medium">{user.handle}</div>
-                  <div className="">{user.email}</div>
+                  {user.email}
                 </div>
                 <div className="border-t border-neutral-700">
                   <Button
