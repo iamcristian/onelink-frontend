@@ -12,7 +12,7 @@ import { searchByHandleSchema } from "@/schemas/userSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useMutation } from "@tanstack/react-query";
-import { searchByHandle } from "@/api";
+import { searchByHandle } from "@/api/user";
 import { Link } from "react-router";
 
 type SearchByHandleFormData = z.infer<typeof searchByHandleSchema>;
