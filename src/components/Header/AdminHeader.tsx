@@ -41,19 +41,26 @@ const AdminHeader = () => {
         <div className="flex items-center space-x-4">
           <ThemeToggle />
 
-          {/* Foto de perfil o icono */}
+          {/* Perfil picture */}
           <div className="relative">
             <button
               onClick={toggleMenu}
-              className="w-10 h-10 rounded-full bg-neutral-700 flex items-center justify-center text-white"
+              className="w-10 h-10 rounded-full bg-neutral-700 flex items-center justify-center"
             >
-              {/* Aquí puede ser una foto de perfil o un ícono */}
-              <span className="text-lg font-semibold">
-                {user.handle.charAt(0).toUpperCase()}
-              </span>
+              {user.image ? (
+                <img
+                  src={user.image}
+                  alt="User profile"
+                  className="h-10 w-10 rounded-full object-cover"
+                />
+              ) : (
+                <span className="text-lg font-semibold">
+                  {user.handle.charAt(0).toUpperCase()}
+                </span>
+              )}
             </button>
 
-            {/* Menú desplegable */}
+            {/* Dropdown */}
             {isMenuOpen && (
               <div className="absolute right-0 mt-2 w-40 border rounded-md shadow-lg">
                 <div className="py-2 px-4 text-sm">
