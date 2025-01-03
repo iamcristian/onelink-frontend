@@ -12,7 +12,6 @@ import OneLink from "./OneLink";
 import { Toaster } from "sonner";
 import AdminHeader from "../header/AdminHeader";
 import NavigationTabs from "../header/NavigationTabs";
-import Footer from "../footer/Footer";
 
 type LinksProps = {
   data: User;
@@ -70,15 +69,15 @@ function LinksComponent({ data }: LinksProps) {
           </Link>
         </div>
 
-        <div className="flex flex-col items-center md:flex-row gap-10 justify-center pt-4">
+        <div className="flex flex-col items-center md:flex-row gap-10 justify-center pt-4 md:mt-20">
           <Outlet />
-          <div className="md:w-1/3 h-fit space-y-5 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg">
+          <div className="w-3/4 md:w-1/2 lg:w-1/3 h-fit space-y-5 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg">
             <h3 className="text-xl font-semibold mb-4">Profile Preview</h3>
             <div className="flex flex-col items-center">
               <img
                 src={data.image}
                 alt="Profile preview"
-                className="w-36 h-36 rounded-full object-cover mb-4"
+                className="w-24 h-24 rounded-full object-cover mb-4"
               />
               <p className="text-lg font-medium text-gray-900 dark:text-gray-100">
                 {data.handle}
@@ -92,7 +91,7 @@ function LinksComponent({ data }: LinksProps) {
               collisionDetection={closestCenter}
               onDragEnd={handleDragEnd}
             >
-              <div className="mt-20 flex flex-col gap-5">
+              <div className="mt-20 flex flex-col gap-2">
                 <SortableContext
                   items={enabledLinks}
                   strategy={verticalListSortingStrategy}
@@ -106,7 +105,6 @@ function LinksComponent({ data }: LinksProps) {
           </div>
         </div>
       </main>
-      <Footer />
       <Toaster position="top-right" />
     </div>
   );

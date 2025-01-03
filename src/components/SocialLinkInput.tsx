@@ -16,7 +16,7 @@ function SocialLinkInput({
   return (
     <div className="bg-neutral-300 p-2 flex items-center gap-3 rounded-lg">
       <div
-        className="w-12 h-12"
+        className="w-8 h-8"
         style={{ backgroundImage: `url('/social/icon_${item.name}.svg')` }}
       ></div>
       <Input

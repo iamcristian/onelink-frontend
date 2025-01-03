@@ -112,7 +112,7 @@ function Links() {
 
   return (
     <>
-      <div className="p-5 md:w-1/3 space-y-5">
+      <div className="w-3/4 md:w-1/2 lg:w-1/3 space-y-2">
         {socialLinks.map((item) => (
           <SocialLinkInput
             key={item.name}
