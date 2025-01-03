@@ -1,50 +1,49 @@
-# React + TypeScript + Vite
+# OneLink - Personal Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project demonstrates a custom link system and routes powered by React + TypeScript. It includes admin settings, authentication, and a public view.
 
-Currently, two official plugins are available:
+## Key Features
+- Routing with `react-router`, separating Home, Auth, and Admin areas.
+- Modular architecture with specialized layouts (`MainLayout`, `AdminLayout`).
+- React Query integration for data fetching and validation.
+- Ready-to-use scripts for development, build, and production.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Backend Highlights
+- Node.js + Express + TypeScript with JWT authentication and link management.
+- Profile APIs, CRUD operations for links, and user search by handle.
+- Security via JWT middleware, rate limiting, CORS configuration, and data validation using Zod.
+- Auto-generated API documentation with Swagger.
 
-## Expanding the ESLint configuration
+## Local Setup
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Start the development server:
+   ```bash
+   npm run dev
+   ```
+3. Other scripts (see `package.json`):
+   - `npm run build`: Builds the project for production.
+   - `npm run preview`: Runs the local server with the production build.
+   - `npm run dev:share`: Serves the application accessible on your local network.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Route Structure
+- "/" (MainLayout) → `Home`
+- "/auth" (MainLayout) → `Login`, `Register`
+- "/admin" (AdminLayout) → `Links`, `Profile`
+- "/:handle" (MainLayout) → `Handle`
+- "/404" → `NotFound`
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Technologies
+- **React + TypeScript** - Main frontend stack.
+- **React Query** - Data fetching and caching.
+- **React Router** - Routing and navigation.
+- **React Hook Form** - Form validation and submission.
+- **zod** - Data validation for forms and API responses.
+- **Tailwind CSS** - Utility-first CSS framework.
+- **Shadcn** - CSS-in-JS library for styling.
+- **Axios** - HTTP client for API requests.
+- **Storybook** - Component development and documentation.
+- **dnd-kit** - Drag and drop interactions.
+- **vite** - Next-generation frontend tooling.
