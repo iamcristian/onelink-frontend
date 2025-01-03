@@ -29,15 +29,8 @@ const AdminHeader = () => {
           <Link to="/admin" className="text-lg font-bold">
             AdminPanel
           </Link>
-          <nav className="hidden md:flex space-x-4">
-            <Link to="/admin/links" className="text-sm hover:underline">
-              Links
-            </Link>
-            <Link to="/admin" className="text-sm hover:underline">
-              Profile
-            </Link>
-          </nav>
         </div>
+        
         <div className="flex items-center space-x-4">
           <ThemeToggle />
 

@@ -1,30 +1,24 @@
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { updateProfile, uploadImage } from "@/api/user";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { User, ProfileForm } from "@/types/user";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { User } from "@/types/user";
-import { editProfileSchema } from "@/schemas/editUserSchema";
-import { updateProfile, uploadImage } from "@/api/user";
+import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-type EditProfileFormData = z.infer<typeof editProfileSchema>;
-
-const EditProfile = () => {
+export default function Profile() {
   const queryClient = useQueryClient();
-  const user: User = queryClient.getQueryData(["user"])!;
+  const data: User = queryClient.getQueryData(["user"])!;
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<EditProfileFormData>({
-    resolver: zodResolver(editProfileSchema),
+  } = useForm({
     defaultValues: {
-      handle: user.handle,
-      description: user.description,
+      handle: data.handle,
+      description: data.description,
     },
   });
 
@@ -34,8 +28,10 @@ const EditProfile = () => {
       toast.error(error.message);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["user"] });
-      window.location.reload(); // Force page reload
+      queryClient.invalidateQueries({
+        queryKey: ["user"],
+      });
+      window.location.reload();
     },
   });
 
@@ -45,79 +41,73 @@ const EditProfile = () => {
       toast.error(error.message);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["user"] });
+      queryClient.invalidateQueries({
+        queryKey: ["user"],
+      });
     },
   });
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) uploadImageMutation.mutate(e.target.files[0]);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      uploadImageMutation.mutate(e.target.files[0]);
+    }
   };
 
-  const handleUserProfileForm = (formData: EditProfileFormData) => {
-    const data: User = queryClient.getQueryData<User>(["user"])!;
-    data.description = formData.description;
-    data.handle = formData.handle;
-    updateProfileMutation.mutate(data);
+  const handleUserProfileForm = (formData: ProfileForm) => {
+    const user: User = queryClient.getQueryData<User>(["user"])!;
+    user.description = formData.description;
+    user.handle = formData.handle;
+    updateProfileMutation.mutate(user);
   };
 
   return (
-    <div className="w-full md:w-1/2 lg:w-1/3 flex flex-col justify-center">
-      <h2 className="text-2xl font-bold mb-4">Edit Profile</h2>
+    <form
+      className="p-5 rounded-lg md:w-1/3 space-y-5"
+      onSubmit={handleSubmit(handleUserProfileForm)}
+    >
+      <legend className="text-2xl text-center">Edit Profile</legend>
+      <div className="grid grid-cols-1 gap-2">
+        <label htmlFor="handle">Username:</label>
+        <Input
+          type="text"
+          className="border-none rounded-lg p-2"
+          placeholder="username"
+          {...register("handle", { required: "Username is required" })}
+        />
 
-      <form
-        onSubmit={handleSubmit(handleUserProfileForm)}
-        className="space-y-6"
-      >
-        {/* Username */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-            Username
-          </label>
-          <Input
-            {...register("handle")}
-            placeholder="Enter your username"
-            className="mt-1"
-          />
-          {errors.handle && (
-            <p className="text-red-500 text-sm">{errors.handle.message}</p>
-          )}
-        </div>
+        {errors.handle && <p className="text-red">{errors.handle.message}</p>}
+      </div>
 
-        {/* Description */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-            Description
-          </label>
-          <Textarea
-            {...register("description")}
-            placeholder="Tell us something about you"
-            className="mt-1"
-            rows={4}
-          />
-          {errors.description && (
-            <p className="text-red-500 text-sm">{errors.description.message}</p>
-          )}
-        </div>
+      <div className="grid grid-cols-1 gap-2">
+        <label htmlFor="description">Description:</label>
+        <Textarea
+          className="border-none rounded-lg p-2"
+          placeholder="Your description"
+          {...register("description", {
+            required: "Description is required",
+          })}
+        />
 
-        {/* Image */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-            Profile Image
-          </label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-            className="mt-1"
-          />
-        </div>
+        {errors.description && (
+          <p className="text-red">{errors.description.message}</p>
+        )}
+      </div>
 
-        <Button type="submit" className="w-full mt-4">
-          Save Changes
-        </Button>
-      </form>
-    </div>
+      <div className="grid grid-cols-1 gap-2">
+        <label htmlFor="handle">Image:</label>
+        <input
+          id="image"
+          type="file"
+          name="handle"
+          className="border-none rounded-lg p-2"
+          accept="image/*"
+          onChange={handleChange}
+        />
+      </div>
+
+      <Button type="submit" className="p-2 text-lg w-full">
+        Save Changes
+      </Button>
+    </form>
   );
-};
-
-export default EditProfile;
+}

@@ -22,8 +22,8 @@ export default function Router() {
         </Route>
 
         <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<Profile />} />
-          <Route path="links" element={<Links />} />
+          <Route index element={<Links />} />
+          <Route path="profile" element={<Profile />} />
         </Route>
 
         <Route path="/404" element={<NotFound />} />
