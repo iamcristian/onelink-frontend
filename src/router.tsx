@@ -7,6 +7,7 @@ import Register from "./pages/Register";
 import AdminLayout from "./layouts/AdminLayout";
 import Profile from "./pages/Profile";
 import Links from "./pages/Links";
+import Handle from "./pages/Handle";
 
 export default function Router() {
   return (
@@ -24,6 +25,10 @@ export default function Router() {
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<Links />} />
           <Route path="profile" element={<Profile />} />
+        </Route>
+
+        <Route path=":handle" element={<MainLayout />}>
+          <Route index element={<Handle />} />
         </Route>
 
         <Route path="/404" element={<NotFound />} />

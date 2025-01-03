@@ -8,6 +8,11 @@ export type User = {
   links: string;
 };
 
+export type UserHandle = Pick<
+  User,
+  "description" | "handle" | "image" | "links" | "name"
+>;
+
 export type ProfileForm = Pick<User, "handle" | "description">;
 
 export type SocialNetwork = {
