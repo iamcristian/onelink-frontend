@@ -1,13 +1,10 @@
 # Construcción del proyecto con Node
-FROM node:18-alpine AS builder
+FROM node:18-alpine
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install
+RUN npm install -g serve
 COPY . .
 RUN npm run build
-
-# Imagen de producción usando Nginx
-FROM nginx:alpine
-COPY --from=builder /app/dist /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+EXPOSE 3000
+CMD ["serve", "-s", "dist"]
