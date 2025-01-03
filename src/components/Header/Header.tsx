@@ -15,7 +15,7 @@ export const Header = () => {
             <LinkIcon className="h-5 w-5" />
             OneLink
           </Link>
-          <nav className="hidden md:flex space-x-4">
+          {/* <nav className="hidden md:flex space-x-4">
             <Link to="/" className="text-sm">
               Docs
             </Link>
@@ -25,7 +25,7 @@ export const Header = () => {
             <Link to="/" className="text-sm">
               Themes
             </Link>
-          </nav>
+          </nav> */}
         </div>
         <div className="flex items-center space-x-4">
           <ThemeToggle />
